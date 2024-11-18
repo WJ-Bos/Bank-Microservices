@@ -1,6 +1,7 @@
 package com.wjbos.accounts.service.impl;
 
 import com.wjbos.accounts.constants.AccountsConstants;
+import com.wjbos.accounts.controller.AccountsController;
 import com.wjbos.accounts.dto.AccountsDto;
 import com.wjbos.accounts.dto.CustomerDto;
 import com.wjbos.accounts.entity.Accounts;
@@ -23,6 +24,7 @@ import java.util.Random;
 @AllArgsConstructor
 public class AccountsServiceImpl implements IAccountsService {
 
+    private final AccountsController accountsController;
     private AccountRepository accountRepository;
     private CustomerRepository customerRepository;
 
@@ -56,6 +58,7 @@ public class AccountsServiceImpl implements IAccountsService {
         return customerDto;
     }
 
+
     private Accounts createNewAccount(Customer customer){
         Accounts newAccount = new Accounts();
         newAccount.setCustomerId(customer.getCustomerId());
@@ -68,4 +71,41 @@ public class AccountsServiceImpl implements IAccountsService {
         newAccount.setCreatedBy("Anon");
         return newAccount;
     }
+
+
+    @Override
+    public boolean updateAccount(CustomerDto customerDto) {
+      boolean isUpdated = false;
+
+      AccountsDto accountsDto = customerDto.getAccountsDto();
+      if(accountsDto!= null){
+          Accounts account = accountRepository.findById(accountsDto.getAccountNumber()).orElseThrow(
+                  () -> new ResourceNotFoundException("Account","AccountNumber",accountsDto.getAccountNumber().toString())
+          );
+          AccountsMapper.mapToAccounts(accountsDto,account);
+          accountRepository.save(account);
+
+          Long customerId = account.getCustomerId();
+
+          Customer customer = customerRepository.findById(customerId).orElseThrow(
+                  () -> new ResourceNotFoundException("Customer", "CustomerID",customerId.toString())
+          );
+          CustomerMapper.mapToCustomer(customerDto,customer);
+          customerRepository.save(customer);
+          isUpdated = true;
+      }
+      return isUpdated;
+    }
+
+    @Override
+    public boolean deleteAccount(String mobileNumber) {
+        Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
+                () -> new ResourceNotFoundException("Customer","Mobile Number",mobileNumber.toString())
+        );
+
+        accountRepository.deleteByCustomerId(customer.getCustomerId());
+        customerRepository.deleteById(customer.getCustomerId());
+        return false;
+    }
+
 }
