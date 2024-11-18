@@ -1,7 +1,6 @@
 package com.wjbos.accounts.service.impl;
 
 import com.wjbos.accounts.constants.AccountsConstants;
-import com.wjbos.accounts.controller.AccountsController;
 import com.wjbos.accounts.dto.AccountsDto;
 import com.wjbos.accounts.dto.CustomerDto;
 import com.wjbos.accounts.entity.Accounts;
@@ -16,7 +15,6 @@ import com.wjbos.accounts.service.IAccountsService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
 
@@ -24,7 +22,6 @@ import java.util.Random;
 @AllArgsConstructor
 public class AccountsServiceImpl implements IAccountsService {
 
-    private final AccountsController accountsController;
     private AccountRepository accountRepository;
     private CustomerRepository customerRepository;
 
@@ -67,7 +64,6 @@ public class AccountsServiceImpl implements IAccountsService {
         newAccount.setBranchAddress(AccountsConstants.ADDRESS);
         return newAccount;
     }
-
 
     @Override
     public boolean updateAccount(CustomerDto customerDto) {
