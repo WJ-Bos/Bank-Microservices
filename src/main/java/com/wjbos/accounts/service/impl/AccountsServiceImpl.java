@@ -38,8 +38,6 @@ public class AccountsServiceImpl implements IAccountsService {
         if(optionalCustomer.isPresent()) {
            throw new CustomerAlreadyExistsException("Customer with Mobile Number "+customerDto.getMobileNumber()+" already exists.");
         }
-        customer.setCreatedAt(LocalDateTime.now());
-        customer.setCreatedBy("Anon");
         Customer savedCustomer = customerRepository.save(customer);
         accountRepository.save(createNewAccount(savedCustomer));
     }
@@ -67,8 +65,6 @@ public class AccountsServiceImpl implements IAccountsService {
         newAccount.setAccountNumber(randomAccNumber);
         newAccount.setAccountType(AccountsConstants.SAVINGS);
         newAccount.setBranchAddress(AccountsConstants.ADDRESS);
-        newAccount.setCreatedAt(LocalDateTime.now());
-        newAccount.setCreatedBy("Anon");
         return newAccount;
     }
 
@@ -78,7 +74,7 @@ public class AccountsServiceImpl implements IAccountsService {
       boolean isUpdated = false;
 
       AccountsDto accountsDto = customerDto.getAccountsDto();
-      if(accountsDto!= null){
+      if(accountsDto != null){
           Accounts account = accountRepository.findById(accountsDto.getAccountNumber()).orElseThrow(
                   () -> new ResourceNotFoundException("Account","AccountNumber",accountsDto.getAccountNumber().toString())
           );
