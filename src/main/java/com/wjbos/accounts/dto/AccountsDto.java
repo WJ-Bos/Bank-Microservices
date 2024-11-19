@@ -1,10 +1,15 @@
 package com.wjbos.accounts.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
+@Schema(
+        name = "Account",
+        description = "Data Transfer Object for the Account"
+)
 public class AccountsDto {
 
     @NotEmpty(message = "Account number can not be empty")
