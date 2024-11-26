@@ -1,4 +1,4 @@
-package com.wjbos.loans2;
+package com.wjbos.loans;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

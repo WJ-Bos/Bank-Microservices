@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.wjbos</groupId>
-	<artifactId>loans2</artifactId>
+	<artifactId>loans</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>loans2</name>
 	<description>loans2</description>
