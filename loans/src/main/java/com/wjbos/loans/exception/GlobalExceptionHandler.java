@@ -42,10 +42,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<ErrorResponseDto> handleLoanAlreadyExistsException(LoanAlreadyExistsException exception, WebRequest request) {
         ErrorResponseDto responseDto = new ErrorResponseDto(
                 request.getDescription(false),
-                HttpStatus.FOUND,
+                HttpStatus.BAD_REQUEST,
                 exception.getMessage(),
                 LocalDateTime.now()
         );
-        return new ResponseEntity<>(responseDto,HttpStatus.FOUND);
+        return new ResponseEntity<>(responseDto,HttpStatus.BAD_REQUEST);
     }
 }
