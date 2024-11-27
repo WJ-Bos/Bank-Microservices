@@ -52,4 +52,14 @@ public class LoansServiceImpl implements ILoansService {
         newLoan.setOutstandingAmount(LoanConstants.NEW_LOAN_LIMIT);
         return newLoan;
     }
+
+    @Override
+    public boolean updateLoan(LoanDto loansDto) {
+        LoansEntity loansEntity = loansRepository.findByMobileNumber(loansDto.getMobileNumber()).orElseThrow(
+                () -> new ResourceNotFoundException("Loan","Mobile Number",loansDto.getMobileNumber())
+        );
+        LoansMapper.mapToLoanEntity(loansDto,loansEntity);
+        loansRepository.save(loansEntity);
+        return true;
+    }
 }
