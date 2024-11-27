@@ -15,6 +15,7 @@ import jakarta.servlet.ServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -124,5 +125,41 @@ public class LoansController {
                     .status(HttpStatus.EXPECTATION_FAILED)
                     .body(new ResponseDto(LoanConstants.STATUS_417,LoanConstants.MESSAGE_417_UPDATE));
         }
+    }
+
+    @Operation(
+            description = "Endpoint to delete a Loan",
+            summary = "Allows users to delete a Loan vis a Mobile Number"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP status Successful"
+            ),
+            @ApiResponse(
+                    responseCode = "417",
+                    description = "HTTP Status Delete Failed",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    })
+    @DeleteMapping("/delete")
+    public ResponseEntity<ResponseDto> deleteLoan(@RequestParam
+                                                     @Pattern(regexp = "(^$|[0-9]{10})",
+                                                             message = "Mobile Number needs to be 10 digits long")
+                                                     String mobileNumber){
+        boolean isDeleted = loansService.deleteLoan(mobileNumber);
+
+        if(isDeleted){
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(new ResponseDto(LoanConstants.MESSAGE_200,LoanConstants.MESSAGE_200));
+        }else{
+            return ResponseEntity
+                    .status(HttpStatus.EXPECTATION_FAILED)
+                    .body(new ResponseDto(LoanConstants.STATUS_417,LoanConstants.MESSAGE_417_DELETE));
+        }
+
     }
 }
