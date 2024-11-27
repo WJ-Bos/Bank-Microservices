@@ -11,6 +11,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.ServletRequest;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -87,5 +89,40 @@ public class LoansController {
                                              String mobileNumber){
         LoanDto loansDto = loansService.fetchAccountLoan(mobileNumber);
         return ResponseEntity.status(HttpStatus.OK).body(loansDto);
+    }
+
+
+
+    @Operation(
+            summary = "Allow a user to Update their Loan details",
+            description = "Check to see if the loan exists and If it does override the existing value with the " +
+                    "new DTO values and save"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Status Successful operation"
+            ),
+            @ApiResponse(
+                    responseCode = "417",
+                    description = "HTTP Status Update operation Failed",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    })
+    @PutMapping("/update")
+    public ResponseEntity<ResponseDto> updateLoanDetails(@Valid @RequestBody LoanDto loansDto, ServletRequest servletRequest){
+        boolean isUpdated = loansService.updateLoan(loansDto);
+
+        if(isUpdated){
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(new ResponseDto(LoanConstants.STATUS_201, LoanConstants.MESSAGE_200));
+        }else{
+            return ResponseEntity
+                    .status(HttpStatus.EXPECTATION_FAILED)
+                    .body(new ResponseDto(LoanConstants.STATUS_417,LoanConstants.MESSAGE_417_UPDATE));
+        }
     }
 }
