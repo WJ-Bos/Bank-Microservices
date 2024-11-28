@@ -59,7 +59,7 @@ public class CardsController {
         cardsService.createCardByMobileNumber(mobileNumber);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(new ResponseDto(CardsConstants.MESSAGE_201,CardsConstants.MESSAGE_201));
+                .body(new ResponseDto(CardsConstants.STATUS_201,CardsConstants.MESSAGE_201));
     }
 
     @Operation(
