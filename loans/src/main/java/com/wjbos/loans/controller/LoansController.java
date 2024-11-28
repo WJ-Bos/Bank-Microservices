@@ -112,7 +112,7 @@ public class LoansController {
             )
     })
     @PutMapping("/update")
-    public ResponseEntity<ResponseDto> updateLoanDetails(@Valid @RequestBody LoanDto loansDto, ServletRequest servletRequest){
+    public ResponseEntity<ResponseDto> updateLoanDetails(@Valid @RequestBody LoanDto loansDto){
         boolean isUpdated = loansService.updateLoan(loansDto);
 
         if(isUpdated){

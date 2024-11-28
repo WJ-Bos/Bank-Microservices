@@ -1,25 +1,25 @@
 package com.wjbos.loans.mapper;
 
 import com.wjbos.loans.dto.LoanDto;
-import com.wjbos.loans.entity.LoansEntity;
+import com.wjbos.loans.entity.Loans;
 
 public class LoansMapper {
 
-    public static LoanDto mapToLoanDto(LoanDto loanDto, LoansEntity loansEntity){
-        loanDto.setMobileNumber(loansEntity.getMobileNumber());
-        loanDto.setLoanType(loansEntity.getLoanType());
-        loanDto.setAmountPaid(loansEntity.getAmountPaid());
-        loanDto.setOutstandingAmount(loansEntity.getOutstandingAmount());
-        loanDto.setLoanNumber(loansEntity.getLoanNumber());
+    public static LoanDto mapToLoanDto(LoanDto loanDto, Loans loans){
+        loanDto.setMobileNumber(loans.getMobileNumber());
+        loanDto.setLoanType(loans.getLoanType());
+        loanDto.setAmountPaid(loans.getAmountPaid());
+        loanDto.setOutstandingAmount(loans.getOutstandingAmount());
+        loanDto.setLoanNumber(loans.getLoanNumber());
         return loanDto;
     }
 
-    public static LoansEntity mapToLoanEntity(LoanDto loanDto, LoansEntity loansEntity){
-        loansEntity.setMobileNumber(loanDto.getMobileNumber());
-        loansEntity.setLoanType(loanDto.getLoanType());
-        loansEntity.setAmountPaid(loanDto.getAmountPaid());
-        loansEntity.setOutstandingAmount(loanDto.getOutstandingAmount());
-        loansEntity.setLoanNumber(loanDto.getLoanNumber());
-        return loansEntity;
+    public static Loans mapToLoanEntity(LoanDto loanDto, Loans loans){
+        loans.setMobileNumber(loanDto.getMobileNumber());
+        loans.setLoanType(loanDto.getLoanType());
+        loans.setAmountPaid(loanDto.getAmountPaid());
+        loans.setOutstandingAmount(loanDto.getOutstandingAmount());
+        loans.setLoanNumber(loanDto.getLoanNumber());
+        return loans;
     }
 }
