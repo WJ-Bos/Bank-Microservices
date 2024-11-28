@@ -1,9 +1,12 @@
 package com.wjbos.cards.repository;
 
-import com.wjbos.cards.entity.CardsEntity;
+import com.wjbos.cards.entity.Cards;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
-public interface CardsRepository extends JpaRepository<CardsEntity,Long> {
+public interface CardsRepository extends JpaRepository<Cards,Long> {
+    Optional<Cards> findByMobileNumber(String mobileNumber);
 }
