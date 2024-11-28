@@ -12,7 +12,7 @@ import lombok.*;
 @Setter
 @Entity
 @ToString
-public class CardsEntity extends BaseEntity {
+public class Cards extends BaseEntity {
 
 
     @Id
