@@ -1,0 +1,3 @@
+com\wjbos\loans\constants\LoanConstants.class
+com\wjbos\loans\audit\AuditAwareImpl.class
+com\wjbos\loans\LoansApplication.class
