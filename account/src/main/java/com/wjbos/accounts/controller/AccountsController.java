@@ -45,7 +45,6 @@ public class AccountsController {
                 .body(new ResponseDto(AccountsConstants.STATUS_201,AccountsConstants.MESSAGE_201));
     }
 
-
     @Operation(
             summary = "Fetch an Account Details REST API",
             description = "Fetch an Account and customer details REST API"
@@ -100,6 +99,7 @@ public class AccountsController {
                     description = "An error occurred"
             )
     })
+
     @DeleteMapping("/delete")
     public ResponseEntity<ResponseDto> deleteAccountDetails(@RequestParam
                                                                 @Pattern(regexp ="(^$|[0-9]{10})",message = "Mobile Number needs to be 10 digits")
@@ -114,5 +114,6 @@ public class AccountsController {
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ResponseDto(AccountsConstants.STATUS_500,AccountsConstants.MESSAGE_500));
         }
+
     }
 }

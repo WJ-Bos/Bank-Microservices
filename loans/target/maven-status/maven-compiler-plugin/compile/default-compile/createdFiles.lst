@@ -1,3 +1,16 @@
+com\wjbos\loans\controller\LoansController.class
+com\wjbos\loans\mapper\LoansMapper.class
+com\wjbos\loans\exception\ResourceNotFoundException.class
+com\wjbos\loans\service\ILoansService.class
+com\wjbos\loans\service\impl\LoansServiceImpl.class
+com\wjbos\loans\exception\LoanAlreadyExistsException.class
+com\wjbos\loans\dto\ErrorResponseDto.class
+com\wjbos\loans\dto\LoanDto.class
+com\wjbos\loans\exception\GlobalExceptionHandler.class
+com\wjbos\loans\repo\LoansRepository.class
+com\wjbos\loans\entity\BaseEntity.class
+com\wjbos\loans\dto\ResponseDto.class
+com\wjbos\loans\LoansApplication.class
+com\wjbos\loans\entity\Loans.class
 com\wjbos\loans\constants\LoanConstants.class
 com\wjbos\loans\audit\AuditAwareImpl.class
-com\wjbos\loans\LoansApplication.class

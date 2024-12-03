@@ -97,7 +97,7 @@ public class AccountsServiceImpl implements IAccountsService {
 
         accountRepository.deleteByCustomerId(customer.getCustomerId());
         customerRepository.deleteById(customer.getCustomerId());
-        return false;
+        return true;
     }
 
 }
