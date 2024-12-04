@@ -3,6 +3,7 @@ package com.wjbos.cards.controller;
 import com.wjbos.cards.constants.CardsConstants;
 import com.wjbos.cards.dto.CardsDto;
 import com.wjbos.cards.dto.ErrorResponseDto;
+import com.wjbos.cards.dto.CardsContactInfoDto;
 import com.wjbos.cards.dto.ResponseDto;
 import com.wjbos.cards.service.impl.CardsServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,7 +14,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -27,11 +30,17 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 )
 @RestController
 @RequestMapping(path = "/api", produces = APPLICATION_JSON_VALUE)
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Validated
 public class CardsController {
 
-    private CardsServiceImpl cardsService;
+    private final CardsServiceImpl cardsService;
+
+    @Autowired
+    private CardsContactInfoDto cardsContactInfoDto;
+
+    @Value("${build.version}")
+    private String buildVersion;
 
     @Operation(
             description = "Creation endpoint for Creating a New Card for a User",
@@ -143,5 +152,32 @@ public class CardsController {
             return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto(CardsConstants.STATUS_417,CardsConstants.MESSAGE_417_DELETE));
         }
     }
+    @Operation(
+            summary = "Fetches the Build info fore Cards microservice",
+            description = "Returns the Build info when a User requests it."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    description = "Http status OK",
+                    responseCode = "200"
+            ),
+            @ApiResponse(
+                    description = "Http Status Error",
+                    responseCode = "200",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    })
+    @GetMapping("/build-info")
+    public ResponseEntity<String> getBuildInfo() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(buildVersion);
+    }
 
+    @GetMapping("/contact-info")
+    public ResponseEntity<CardsContactInfoDto> getCardsContactInfo() {
+        return ResponseEntity.status(HttpStatus.OK).body(cardsContactInfoDto);
+    }
 }
