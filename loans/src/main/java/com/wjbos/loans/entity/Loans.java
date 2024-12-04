@@ -22,7 +22,7 @@ public class Loans extends BaseEntity{
     @Column(name = "loan_number")
     private String loanNumber;
 
-    @Column(name = "customer_id")
+    @Column(name = "loan_type")
     private String loanType;
 
     @Column(name = "total_loan")
