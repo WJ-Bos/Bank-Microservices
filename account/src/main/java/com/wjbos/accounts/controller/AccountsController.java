@@ -1,16 +1,21 @@
 package com.wjbos.accounts.controller;
 
 import com.wjbos.accounts.constants.AccountsConstants;
+import com.wjbos.accounts.dto.AccountsContactInfoDto;
 import com.wjbos.accounts.dto.CustomerDto;
+import com.wjbos.accounts.dto.ErrorResponseDto;
 import com.wjbos.accounts.dto.ResponseDto;
 import com.wjbos.accounts.service.impl.AccountsServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,12 +27,15 @@ import org.springframework.web.bind.annotation.*;
         description = "CRUD REST API's for bank accounts and account details"
 )
 @RestController
-@RequestMapping(path = "/api",produces = MediaType.APPLICATION_JSON_VALUE)
-@AllArgsConstructor
+@RequestMapping(path = "/api",produces = {MediaType.APPLICATION_JSON_VALUE})
 @Validated
+@RequiredArgsConstructor
 public class AccountsController {
 
-    private AccountsServiceImpl accountsService;
+    private final AccountsServiceImpl accountsService;
+
+    @Value("${build.version}")
+    private String buildVersion;
 
     @Operation(
             summary = "Create an Account REST API",
@@ -115,5 +123,34 @@ public class AccountsController {
                     .body(new ResponseDto(AccountsConstants.STATUS_500,AccountsConstants.MESSAGE_500));
         }
 
+    }
+
+    @Operation(
+            summary = "Fetches the Build info fore accounts microservice",
+            description = "Returns the Build info when a User requests it."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    description = "Http status OK",
+                    responseCode = "200"
+            ),
+            @ApiResponse(
+                    description = "Http Status Error",
+                    responseCode = "200",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    })
+    @GetMapping("/build-info")
+    public ResponseEntity<String> getBuildInfo() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(buildVersion);
+    }
+
+    @GetMapping("/contact-info")
+    public ResponseEntity<AccountsContactInfoDto> getCardsContactInfo() {
+        return ResponseEntity.status(HttpStatus.OK).body(accountsContactInfoDto);
     }
 }
