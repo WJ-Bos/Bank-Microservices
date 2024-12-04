@@ -3,6 +3,7 @@ package com.wjbos.loans.controller;
 import com.wjbos.loans.constants.LoanConstants;
 import com.wjbos.loans.dto.ErrorResponseDto;
 import com.wjbos.loans.dto.LoanDto;
+import com.wjbos.loans.dto.LoansContactInfoDto;
 import com.wjbos.loans.dto.ResponseDto;
 import com.wjbos.loans.service.impl.LoansServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,10 +12,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.ServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -29,11 +31,17 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @Validated
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping(path = "/api",produces = APPLICATION_JSON_VALUE)
 public class LoansController {
 
-    LoansServiceImpl loansService;
+    private final LoansServiceImpl loansService;
+
+    @Autowired
+    private LoansContactInfoDto loansContactInfoDto;
+
+    @Value("${build.version}")
+    private String buildVersion;
 
     @Operation(
         summary = "Endpoint for creating a Loan",
@@ -161,4 +169,34 @@ public class LoansController {
         }
 
     }
+
+    @Operation(
+            summary = "Fetches the Build info fore Loans microservice",
+            description = "Returns the Build info when a User requests it."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    description = "Http status OK",
+                    responseCode = "200"
+            ),
+            @ApiResponse(
+                    description = "Http Status Error",
+                    responseCode = "200",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    })
+    @GetMapping("/build-info")
+    public ResponseEntity<String> getBuildInfo() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(buildVersion);
+    }
+
+    @GetMapping("/contact-info")
+    public ResponseEntity<LoansContactInfoDto> getCardsContactInfo() {
+        return ResponseEntity.status(HttpStatus.OK).body(loansContactInfoDto);
+    }
+
 }
