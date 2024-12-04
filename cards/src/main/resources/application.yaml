@@ -18,3 +18,14 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+build:
+  version: "1.0"
+
+cards:
+  message: "Welcome to the loans Microservice"
+  contactDetails:
+    name: "WJ Boshoff"
+    email: "wjbosdev@gmail.com"
+  onCallSupport:
+    - (066) 7584578

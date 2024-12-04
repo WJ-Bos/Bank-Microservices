@@ -98,7 +98,7 @@
                 <version>3.3.2</version>
                 <configuration>
                     <to>
-                        <image>wjbos/cards:v1</image>
+                        <image>wjbos/${project.artifactId}:v1</image>
                     </to>
                 </configuration>
             </plugin>
