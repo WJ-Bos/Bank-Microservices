@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -33,6 +34,9 @@ import org.springframework.web.bind.annotation.*;
 public class AccountsController {
 
     private final AccountsServiceImpl accountsService;
+
+    @Autowired
+    private AccountsContactInfoDto accountsContactInfoDto;
 
     @Value("${build.version}")
     private String buildVersion;
@@ -150,7 +154,7 @@ public class AccountsController {
     }
 
     @GetMapping("/contact-info")
-    public ResponseEntity<AccountsContactInfoDto> getCardsContactInfo() {
+    public ResponseEntity<AccountsContactInfoDto> getAccountsContactInfo() {
         return ResponseEntity.status(HttpStatus.OK).body(accountsContactInfoDto);
     }
 }
