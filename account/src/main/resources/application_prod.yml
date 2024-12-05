@@ -1,0 +1,15 @@
+spring:
+  config:
+    activate:
+      on-profile: "prod"
+
+build:
+  version: "1.0"
+
+accounts:
+  message: "Welcome to Bank accounts related prod APIs "
+  contactDetails:
+    name: "Not WJ Boshoff - Product Owner"
+    email: "testuser@fakemail.com"
+  onCallSupport:
+    - (453) 392-4829
