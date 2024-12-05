@@ -1,0 +1,15 @@
+spring:
+  config:
+    activate:
+      on-profile: "qa"
+
+build:
+  version: "1.0"
+
+loans:
+  message: "Welcome to Loans related qa APIs "
+  contactDetails:
+    name: "Not WJ Boshoff again - Product tester"
+    email: "testuser2@fakemail.com"
+  onCallSupport:
+    - (453) 392-4829
