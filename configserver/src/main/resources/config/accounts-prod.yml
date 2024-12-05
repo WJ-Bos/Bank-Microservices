@@ -6,5 +6,4 @@ accounts:
   contactDetails:
     name: "Not WJ Boshoff - Product Owner"
     email: "testuser@fakemail.com"
-  onCallSupport:
-    - (453) 392-4829
+  onCallSupport: "(453) 392-4829"
