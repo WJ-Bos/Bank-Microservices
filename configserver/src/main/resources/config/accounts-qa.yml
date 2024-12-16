@@ -1,9 +1,0 @@
-build:
-  version: "1.0"
-
-accounts:
-  message: "Welcome to Bank accounts related qa APIs "
-  contactDetails:
-    name: "Not WJ Boshoff again - Product tester"
-    email: "testuser2@fakemail.com"
-  onCallSupport: "(453) 392-4829"
