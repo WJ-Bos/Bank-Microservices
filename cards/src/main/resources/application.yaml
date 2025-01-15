@@ -3,4 +3,4 @@ spring:
     name: "cards"
 
   config:
-    import: "optional:configserver:http://localhost:8071/"
+    import: "optional:configserver:http://configserver-ms:8071/"
